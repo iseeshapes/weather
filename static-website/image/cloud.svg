@@ -1,0 +1,67 @@
+<svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="rain-drop" fill="#0077ff" stroke="#000000" stroke-width="5" transform="rotate(45,0,0)">
+      <path d="
+        M 0,-50
+        L 15,0
+        A 15 15 0 0 1 -15,0
+        Z" />
+    </g>
+
+    <use id="rain-drop1" href="#rain-drop">
+      <!--animateMotion dur="3s" repeatCount="indefinite" from="0,0" to="0,150" /-->
+    </use>
+
+    <use id="rain-drop2" href="#rain-drop">
+      <!--animateMotion dur="3s" repeatCount="indefinite" from="0,0" to="0,150" begin="1.5s" /-->
+    </use>
+
+    <polygon id="sun-point" points="500,150 550,225 450,225" />
+
+    <g id="sun" fill="#ffff00" stroke="#000000" stroke-width="5">
+      <circle cx="500" cy="500" r="250" />
+      <use href="#sun-point" />
+      <use href="#sun-point" transform="rotate( 45, 500, 500)" />
+      <use href="#sun-point" transform="rotate( 90, 500, 500)" />
+      <use href="#sun-point" transform="rotate( 135, 500, 500)" />
+      <use href="#sun-point" transform="rotate( 180, 500, 500)" />
+      <use href="#sun-point" transform="rotate( 225, 500, 500)" />
+      <use href="#sun-point" transform="rotate( 270, 500, 500)" />
+      <use href="#sun-point" transform="rotate( 315, 500, 500)" />
+      <!--animateTransform attributeName="transform"
+                            attributeType="XML"
+                            type="rotate"
+                            from="0 500 500"
+                            to="45 500 500"
+                            dur="3s"
+                            repeatCount="indefinite"/-->
+    </g>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="1000" fill="#bbddff" />
+
+  <use href="#sun"  transform="translate(-100, -100)" />
+
+  <path d="
+    M 700,700
+    L 300,700
+    A 150 150 0 1 1 306.317,400.133
+    A 200 200 0 1 1 693.596,500.205
+    A 100 100 0 1 1 700,700"
+    fill="grey" stroke="#000000" stroke-width="5" />
+
+  <g id="rain">
+    <use href="#rain-drop1" transform="translate(300,800)" />
+    <use href="#rain-drop2" transform="translate(375,800)" />
+    <use href="#rain-drop1" transform="translate(450,800)" />
+    <use href="#rain-drop2" transform="translate(525,800)" />
+    <use href="#rain-drop1" transform="translate(600,800)" />
+    <use href="#rain-drop2" transform="translate(675,800)" />
+  </g>
+
+  <style>
+    #rain {
+      opacity: 1;
+    }
+  </style>
+</svg>

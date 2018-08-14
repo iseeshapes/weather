@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <title>Castle Fields Observatory Weather</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/dateTime.js"></script>
+    <script src="js/weather.js"></script>
+    <style>
+    .tempDash {
+      font-size: 36pt;
+      height: 150px;
+      width: 150px;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>Castle Fields Observatory Weather</h1>
+    <p>Weather at <span id="observationTime"></span></p>
+    <div id="temperature" class="tempDash"></div>
+    <!--div id="windDirection" style="width: 100px; height: 100px">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle id="windArrowBackground" cx="50" cy="50" r="50" fill="yellow" />
+
+        <polyline points="50,5 60,50 55,50 55,95 45,95 45,50 40,50"
+                  id="windArrowShape" fill="black" stroke="black" />
+      </svg>
+    </div-->
+    <!--img src="image/barometer.svg" style="width: 200px; height: 200px;" /-->
+    <img src="image/windDirection.svg" style="width: 200px; height: 200px;" />
+    <img src="image/barometer2.svg" style="width: 200px; height: 200px;" />
+    <img src="image/cloud.svg" style="width: 200px; height: 200px;" />
+    <p>Server location <span id="serverLocation"></span> updated at <span id="serverUpdated"></span></p>
+    <script>
+      var observations = null;
+      var cursor = -10;
+      var maxTemp = -100;
+      var minTemp = 100;
+
+      function nextTempurature () {
+        var colour = biColourScaleCSS ((observations[cursor].temperature - minTemp)/(maxTemp - minTemp));
+        var backgroundColour = "rgb(" + colour.high.red + "," + colour.high.green + "," + colour.high.blue + ")";
+        var foregroundColour = "rgb(" + colour.low.red + "," + colour.low.green + "," + colour.low.blue + ")";
+
+        $("#temperature").html(observations[cursor].temperature);
+        $("#temperature").css ("background", backgroundColour);
+        $("#temperature").css ("color", foregroundColour);
+
+        $("#observationTime").html(dateTimeToString(new Date(observations[cursor].time)));
+      }
+
+      function nextWindParameters () {
+        $("#windArrowShape").attr("transform", "rotate(" + observations[cursor].windDirection + ",50,50)");
+        var percent = 1;
+        if (observations[cursor].windSpeed < 30) {
+          percent = observations[cursor].windSpeed / 30;
+        }
+        var colour = colourScaleCSS(percent);
+        var backgroundColour = "rgb(" + colour.red + "," + colour.green + "," + colour.blue + ")";
+        $("#windArrowBackground").attr("fill", backgroundColour)
+      }
+
+      $(function() {
+        $.getJSON("/data/server.json", function(data) {
+          $("#serverLocation").html(data.server);
+          $("#serverUpdated").html(data.updated);
+        });
+
+        $.getJSON("/data/observations.json", function(data) {
+          observations = data;
+          observations.forEach (function (observation){
+            if (observation.temperature < minTemp) {
+              minTemp = observation.temperature;
+            }
+            if (observation.temperature > maxTemp) {
+              maxTemp = observation.temperature;
+            }
+          });
+        });
+
+        window.setInterval(function() {
+          cursor++;
+          if (cursor < 0 || cursor >= observations.length) {
+            cursor = 0;
+          }
+
+          nextTempurature ();
+          nextWindParameters ();
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

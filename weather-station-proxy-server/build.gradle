@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.3.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'uk.co.iseeshapes'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+/*jar {
+    from project (':common-weather').sourceSets.main.output
+} */
+
+bootJar {
+    baseName = 'weather-station-proxy-server'
+    version =  '0.1.0'
+}
+
+bootRun {
+    sourceResources sourceSets.main
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project (":common-weather")
+    compile 'uk.co.iseeshapes:common-weather:1.0-SNAPSHOT'
+    compile 'org.springframework.data:spring-data-mongodb:2.0.8.RELEASE'
+    compile("org.springframework.boot:spring-boot-starter-web")
+    // compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-devtools")
+}

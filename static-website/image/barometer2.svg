@@ -1,0 +1,33 @@
+<svg viewBox="0 0 1010 1010" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="505" cy="505" r="500" stroke="#000000" stroke-width="5" fill="#ffffff" />
+  <!--circle cx="505" cy="505" r="400" stroke="#000000" stroke-width="1" fill="#ffffff" />
+  <circle cx="505" cy="505" r="380" stroke="#000000" stroke-width="1" fill="#ffffff" /-->
+
+  <defs>
+    <path id="segment" d="
+      M 505,5
+      A 500 500 0 0 1 696.3417162,43.06023374
+      L 600.6708581,274.0301169
+      A 250 250 0 0 0 505,255
+      Z"
+      stroke="#000000" stroke-width="3" />
+
+      <polyline id="pointer" points="505,205 555,505 525,505 525,750 485,750 485,505 455,505"
+              fill="black" stroke="black" />
+  </defs>
+
+  <use href="#segment" transform="rotate(-135.0, 505, 505)" fill="#ff00ff" />
+  <use href="#segment" transform="rotate(-112.5, 505, 505)" fill="#aa00ff" />
+  <use href="#segment" transform="rotate( -90.0, 505, 505)" fill="#4400ff" />
+  <use href="#segment" transform="rotate( -67.5, 505, 505)" fill="#0044ff" />
+  <use href="#segment" transform="rotate( -45.0, 505, 505)" fill="#00aaff" />
+  <use href="#segment" transform="rotate( -22.5, 505, 505)" fill="#00ffff" />
+  <use href="#segment"                                      fill="#00ff00" />
+  <use href="#segment" transform="rotate(  22.5, 505, 505)" fill="#44ff00" />
+  <use href="#segment" transform="rotate(  45.0, 505, 505)" fill="#aaff00" />
+  <use href="#segment" transform="rotate(  67.5, 505, 505)" fill="#ffff00" />
+  <use href="#segment" transform="rotate(  90.0, 505, 505)" fill="#ffff44" />
+  <use href="#segment" transform="rotate( 112.5, 505, 505)" fill="#ffffaa" />
+
+  <use href="#pointer" transform="rotate(  55.2, 505, 505)" />
+</svg>

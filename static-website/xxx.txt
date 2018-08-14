@@ -1,0 +1,1 @@
+https://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?action=updateraw?ID=xxx?PASSWORD=xxx&dateutc=2018-08-07 08:12:37&winddir=-18710&windspeedmph=0.0&windgustmph=0.0&baromin=28.697226249782215&humidity=81&dewptf=53.96&tempf=60.8&rainin=0.9673469387755101&dailyrainin=0.9673469387755101&solarradiation=0.0&UV=0.0&indoortempf=80.42&indoorhumidity=48

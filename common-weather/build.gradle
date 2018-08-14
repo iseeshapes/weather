@@ -1,0 +1,19 @@
+plugins {
+    id 'java-library'
+}
+
+group 'uk.co.iseeshapes'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'com.fasterxml.jackson.core:jackson-core:2.9.0'
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations:2.9.0'
+    compileOnly 'org.slf4j:slf4j-api:1.7.25'
+    compileOnly 'org.springframework.data:spring-data-mongodb:2.0.8.RELEASE'
+}
