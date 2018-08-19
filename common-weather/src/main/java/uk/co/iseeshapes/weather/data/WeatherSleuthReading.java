@@ -8,11 +8,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 @Document
 public class WeatherSleuthReading {
     private static final Logger log = LoggerFactory.getLogger(WeatherSleuthReading.class);
-    private static final SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static final SimpleDateFormat utcFormat;
+
+    static {
+        utcFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     @Id
     private long id;
@@ -35,7 +41,7 @@ public class WeatherSleuthReading {
     private int indoorHumidity;         // %
     private double absoluteBarometer;   // hPa
     private double relativeBarometer;   // hPa
-    private boolean lowBattery;         // true / false
+    private String lowBattery;         // true / false
 
     public WeatherSleuthReading (String dateUtc) {
         try {
@@ -210,11 +216,11 @@ public class WeatherSleuthReading {
         this.relativeBarometer = relativeBarometer;
     }
 
-    public boolean isLowBattery() {
+    public String isLowBattery() {
         return lowBattery;
     }
 
-    public void setLowBattery(boolean lowBattery) {
+    public void setLowBattery(String lowBattery) {
         this.lowBattery = lowBattery;
     }
 }

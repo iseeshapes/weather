@@ -1,3 +1,0 @@
-https://example.com?username=Xuser&password=Xpass&data1=1.23&data2=2.1&other=23.7
-https://example.com?username=Yuser&password=Ypass&data1=4.56&data2=&other=23.7
-aaaaa

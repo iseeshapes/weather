@@ -46,7 +46,7 @@ public class WeatherStationReceiverController {
             @RequestParam(value = "inhumi", defaultValue = "0") int indoorHumidity,
             @RequestParam(value = "absbaro", defaultValue = "0") double absoluteBarometer,
             @RequestParam(value = "relbaro", defaultValue = "0") double relativeBarometer,
-            @RequestParam(value = "lowbatt", defaultValue = "0") boolean lowBattery,
+            @RequestParam(value = "lowbatt", defaultValue = "0") String lowBattery,
             @RequestParam(value = "dateutc", defaultValue = "true") String dateUtc
             //softwaretype=WH2600GEN_V2.2.7
             //action=updateraw
