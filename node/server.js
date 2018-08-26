@@ -4,6 +4,11 @@ const app = express();
 const MongoClient = require('mongodb').MongoClient
 const connectionString = 'mongodb://weatherApplication:weatherPassword@nas:27017/weather';
 
+const timespanParameter = require('./query/timespanParameter');
+//const measurementParameter = require('./query/measurementParameter');
+const weatherHistory = require('./query/weatherHistory');
+const weatherExtremes = require('./query/weatherExtremes');
+
 var weatherDB = null;
 
 MongoClient.connect(connectionString, { useNewUrlParser: true }, (err, database) => {
@@ -16,53 +21,53 @@ MongoClient.connect(connectionString, { useNewUrlParser: true }, (err, database)
 })
 
 app.get("/", function(request, response) {
-  response.sendFile ("/Users/eliot/weather/node/index.html");
+  response.sendFile ("/Users/eliot/weather/node/html/index.html");
 });
 
 app.get("/latest", async (request, response, next) => {
   var sort = {observationTimeUtc : -1};
   var documents = await weatherDB.collection("weather_sleuth_observations").find().sort(sort).limit(1).toArray();
   response.status(200).json({
-    date: documents[0].observationTimeUtc,
-    temperature: documents[0].outsideTemperature,
-    pressure: documents[0].absoluteBarometer
+    time: documents[0].observationTimeUtc,
+    temperature : documents[0].outsideTemperature,
+    humidity: documents[0].outsideHumidity,
+    windDirection: documents[0].windDirection,
+    windSpeed: documents[0].windSpeed,
+    windGust: documents[0].windGust,
+    rainRate: documents[0].rainRate,
+    light: documents[0].light,
+    uv: documents[0].uv,
+    pressure: documents[0].relativeBarometer
   });
 });
 
-app.get("/history", async (request, response, next) => {
-  var dateLimit = new Date();
-  console.log(dateLimit);
-  dateLimit.setMinutes (0);
-  dateLimit.setSeconds (0);
-  console.log(dateLimit);
+app.get("/history/timespan/:timespan/steps/:steps", async (request, response, next) => {
+  var range = timespanParameter(request.params.timespan);
 
-  var aggregationPipeline = [
-    {
-      $match: {
-        observationTimeUtc : { $gt : dateLimit }
-      }
-    },
-    {
-      $project : {
-        minute: { $divide: [ { $minute: "$observationTimeUtc" }, 6 ] },
-        temperature: "$outsideTemperature",
-        pressure: "$relativeBarometer"
-      }
-    },
-    {
-      $group: {
-        _id: { $subtract: [ "$minute", { $mod: [ "$minute", 1 ] } ] },
-        temperature: { $avg: "$temperature" },
-        pressure: { $avg: "$pressure" },
-      }
-    },
-    {
-      $sort: {
-        _id: 1
-      }
-    }
-  ];
+  if (request.params.steps == null || request.params.steps == undefined) {
+    response.status(500).json({ message : "No 'steps' parameter defined in query string" });
+    return;
+  }
 
-  var results = await weatherDB.collection("weather_sleuth_observations").aggregate(aggregationPipeline).toArray();
-  response.status(200).json(results);
+  var collection = weatherDB.collection("weather_sleuth_observations");
+  try {
+    result = await weatherHistory(collection, range, request.params.steps);
+    response.status(200).json(result);
+  } catch (err) {
+    response.status(500).json(err);
+  }
+});
+
+app.get("/extremes/timespan/:timespan", async (request, response, next) => {
+  var range = timespanParameter(request.params.timespan);
+
+  var collection = weatherDB.collection("weather_sleuth_observations");
+
+  var result = {
+    minimumTemperature: await weatherExtremes.minimumTemperature (collection, range),
+    maximumTemperature: await weatherExtremes.maximumTemperature (collection, range),
+    minimumPressure: await weatherExtremes.minimumPressure (collection, range),
+    maximumPressure: await weatherExtremes.maximumPressure (collection, range)
+  };
+  response.status(200).json(result);
 });

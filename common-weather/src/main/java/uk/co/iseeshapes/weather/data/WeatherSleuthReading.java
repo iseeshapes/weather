@@ -16,7 +16,7 @@ public class WeatherSleuthReading {
     private static final SimpleDateFormat utcFormat;
 
     static {
-        utcFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        utcFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
         utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 

@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>Weather REST Service</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+      .rest-response-box {
+        width: 500;
+        height: 300;
+      }
+
+      table, td, th {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Weather REST Service</h1>
+    <h2>/</h2>
+    <div>This page</div>
+    <h2>/latest</h2>
+    <div>Last recorded temperature/pressure</div>
+    <textarea id="latest" class="rest-response-box"></textarea>
+    <h2>/history/timespan/&lt;timespan&gt;/steps/&lt;steps&gt;</h2>
+    <div>History temperature/pressure</div>
+    <textarea id="history" class="rest-response-box"></textarea>
+    <h2>/extremes/timespan/&lt;timespan&gt;</h2>
+    <div>Extremes of temperature and pressure</div>
+    <textarea id="extremes" class="rest-response-box"></textarea>
+    <h2>timespan</h2>
+    <table class="parameter-table">
+      <tr><th>Parameter</th><th>Description</th></tr>
+      <tr><td>lastMinute</td><td>from start of the current minute to now</td></tr>
+      <tr><td>lastHour</td><td>from start of the current hour to now</td></tr>
+      <tr><td>today</td><td>from start of today to now</td></tr>
+      <tr><td>thisMonth</td><td>from start of the current month to now</td></tr>
+      <tr><td>thisYear</td><td>from start of the current year to now</td></tr>
+      <tr><td>last1Hour</td><td>last 1 hour</td></tr>
+      <tr><td>last12Hours</td><td>last 12 hours</td></tr>
+      <tr><td>last24Hours</td><td></td>last 24 hours</tr>
+      <tr><td>last3Days</td><td>last 3 days</td></tr>
+      <tr><td>last7Days</td><td>last 7 days</td></tr>
+      <tr><td>last30Days</td><td>last 30 days</td></tr>
+    </table>
+    <h2>steps</h2>
+    <table class="parameter-table">
+      <tr><th>Parameter</th><th>Description</th></tr>
+      <tr><td>minutes</td><td>break into minute chunks</td></tr>
+      <tr><td>hours</td><td>break into hour chunks</td></tr>
+      <tr><td>days</td><td>break into day chunks</td></tr>
+      <tr><td>months</td><td>break into month chunks</td></tr>
+      <tr><td>years</td><td>break into year chunks</td></tr>
+    </table>
+    <h2>measurement</h2>
+    <table class="parameter-table">
+      <tr><th>Parameter</th><th>Description</th></tr>
+      <tr><td>temperature</td><td>Outside Tempurature</td></tr>
+      <tr><td>humidity</td><td>Outside Humidity</td></tr>
+      <tr><td>windDirection</td><td>Wind Direction</td></tr>
+      <tr><td>windSpeed</td><td>Wind Speed</td></tr>
+      <tr><td>windGust</td><td>Wind Gust</td></tr>
+      <tr><td>rainRate</td><td>Rain Rate</td></tr>
+      <tr><td>light</td><td>light</td></tr>
+      <tr><td>uv</td><td>UV</td></tr>
+      <tr><td>pressure</td><td>Pressure</td></tr>
+    </table>
+    <script>
+      $(function () {
+        $.getJSON('/latest', function(data) {
+          var jsonText = JSON.stringify(data, null, '  ');
+          $("#latest").html(jsonText);
+        });
+        $.getJSON('/history/timespan/last12Hours/steps/hours', function(data) {
+          var jsonText = JSON.stringify(data, null, '  ');
+          $("#history").html(jsonText);
+        });
+        $.getJSON('/extremes/timespan/thisMonth', function(data) {
+          var jsonText = JSON.stringify(data, null, '  ');
+          $("#extremes").html(jsonText);
+        });
+      });
+    </script>
+  </body>
+</html>

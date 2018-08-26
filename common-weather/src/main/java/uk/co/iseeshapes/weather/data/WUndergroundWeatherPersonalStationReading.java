@@ -10,13 +10,19 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WUndergroundWeatherPersonalStationReading {
     private static final Logger log = LoggerFactory.getLogger(WUndergroundWeatherPersonalStationReading.class);
 
-    private static final String datePattern = "yyyy-MM-dd hh:mm:ss";
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    private static final String datePattern = "yyyy-MM-dd kk:mm:ss";
+    private static final SimpleDateFormat simpleDateFormat;
+
+    static {
+        simpleDateFormat = new SimpleDateFormat(datePattern);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     @JsonIgnore
     private Date readingTime;

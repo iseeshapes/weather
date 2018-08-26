@@ -14,9 +14,13 @@ import uk.co.iseeshapes.weather.data.WeatherStationReading;
 import uk.co.iseeshapes.weather.proxy.service.WUndergroundUploadService;
 
 import java.net.*;
+import java.text.DecimalFormat;
 
 public class DefaultWUndergroundUploadService implements WUndergroundUploadService {
     private static final Logger log = LoggerFactory.getLogger(DefaultWUndergroundUploadService.class);
+
+    private static final DecimalFormat simpleNumberFormat = new DecimalFormat("0.0");
+    private static final DecimalFormat rainNumberFormat = new DecimalFormat("0.0###");
 
     private final String username;
     private final String password;
@@ -65,13 +69,19 @@ public class DefaultWUndergroundUploadService implements WUndergroundUploadServi
             String url = "http://weatherstation.wunderground.com/weatherstation/updateweatherstation.php?" +
                     "action=updateraw&ID=" + username + "&PASSWORD=" + password +
                     "&dateutc=" + URLEncoder.encode(data.getDateUtc(), "UTF-8") +
-                    "&winddir=" + data.getWindDirection() + "&windspeedmph=" + data.getWindSpeed() +
-                    "&windgustmph=" + data.getWindGust() + "&baromin=" + data.getPressure() +
-                    "&humidity=" + data.getHumidity() + "&dewptf=" + data.getDewPoint() +
-                    "&tempf=" + data.getTemperature() + "&rainin=" + data.getRainRate() +
-                    "&dailyrainin=" + data.getDailyRain() + "&solarradiation=" + data.getSolarRadiation() +
-                    "&UV=" + data.getUv() + "&indoortempf=" + data.getIndoorTemperature() +
-                    "&indoorhumidity=" + data.getIndoorHumidity();
+                    "&winddir=" + simpleNumberFormat.format(data.getWindDirection()) +
+                    "&windspeedmph=" + simpleNumberFormat.format(data.getWindSpeed()) +
+                    "&windgustmph=" + simpleNumberFormat.format(data.getWindGust()) +
+                    "&baromin=" + simpleNumberFormat.format(data.getPressure()) +
+                    "&humidity=" + simpleNumberFormat.format(data.getHumidity()) +
+                    "&dewptf=" + simpleNumberFormat.format(data.getDewPoint()) +
+                    "&tempf=" + simpleNumberFormat.format(data.getTemperature()) +
+                    "&rainin=" + rainNumberFormat.format(data.getRainRate()) +
+                    "&dailyrainin=" + rainNumberFormat.format(data.getDailyRain()) +
+                    "&solarradiation=" + simpleNumberFormat.format(data.getSolarRadiation()) +
+                    "&UV=" + simpleNumberFormat.format(data.getUv()) +
+                    "&indoortempf=" + simpleNumberFormat.format(data.getIndoorTemperature()) +
+                    "&indoorhumidity=" + simpleNumberFormat.format(data.getIndoorHumidity());
 
             Thread thread = new Thread(new Worker(new URI(url)));
             thread.start();
