@@ -73,7 +73,7 @@ db.createCollection("weather_sleuth_observations", {
              description: "Indoor Humidity in %"
            },
            absoluteBarometer: {
-             bsonType: ";double",
+             bsonType: "double",
              description: "Absolute Barometer in mBar"
            },
            relativeBarometer: {

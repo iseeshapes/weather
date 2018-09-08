@@ -2,8 +2,10 @@ function colourScale(percent) {
   percent *= 100;
 
   var red = 0, green = 0, blue = 0;
-  if (percent == 0) {
+  if (percent <= 0) {
     blue = 1;
+  } else if (percent > 100) {
+    red = 1;
   } else if (percent > 50) {
     var temp = percent - 50
     red = (temp / 50);
@@ -11,8 +13,6 @@ function colourScale(percent) {
   } else if (percent < 50) {
     green = (percent / 50);
     blue = ((50 - percent) / 50);
-  } else if (percent == 100) {
-    red = 1;
   } else {
     green = 1;
   }

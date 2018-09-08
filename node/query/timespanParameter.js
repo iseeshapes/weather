@@ -67,7 +67,7 @@ function last24Hours () {
   var end = new Date();
   var start = new Date (end);
   var hours = start.getHours ();
-  start.setHours (days - 24);
+  start.setHours (hours - 24);
   return {
     start: start,
     end: end
