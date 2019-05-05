@@ -1,3 +1,5 @@
 rootProject.name = 'weather'
 include 'common-weather'
 include 'weather-station-proxy-server'
+include 'weather-display'
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="uk.co.iseeshapes.weather.display.controller.SimpleDisplayController"
+            prefHeight="320.0" prefWidth="480.0">
+    <Label id="temperature-label" text="%simple-display.temperature" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <Label id="temperature-value" fx:id="temperatureLabel" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Label id="pressure-label" text="%simple-display.pressure" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Label id="pressure-text" fx:id="pressureLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label id="time-label" text="%simple-display.time" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label id="time-text" fx:id="timeLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+</GridPane>

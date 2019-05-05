@@ -43,6 +43,10 @@ public class WeatherSleuthReading {
     private double relativeBarometer;   // hPa
     private String lowBattery;         // true / false
 
+    public WeatherSleuthReading () {
+
+    }
+
     public WeatherSleuthReading (String dateUtc) {
         try {
             observationTimeUtc = utcFormat.parse(dateUtc);

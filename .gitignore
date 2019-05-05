@@ -4,3 +4,4 @@ common-weather/build
 gradle
 weather-station-proxy-server/build
 .idea
+weather-display/build
