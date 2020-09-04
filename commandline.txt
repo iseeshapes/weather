@@ -1,1 +1,0 @@
-mongo mongodb://weatherApplication:weatherPassword@nas:27017/weather --quiet query.js > data.csv

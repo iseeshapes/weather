@@ -81,7 +81,7 @@ db.createCollection("weather_sleuth_observations", {
              description: "Relative Barometer in mBar"
            },
            lowBattery: {
-             bsonType: "String",
+             bsonType: "string",
              description: "Low Battery indicator"
            }
          }

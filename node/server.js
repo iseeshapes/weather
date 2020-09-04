@@ -11,7 +11,7 @@ const weatherExtremes = require('./query/weatherExtremes');
 
 var weatherDB = null;
 
-MongoClient.connect(connectionString, { useNewUrlParser: true }, (err, database) => {
+MongoClient.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true }, (err, database) => {
   // ... start the server
   if (err) throw err;
   weatherDB = database.db("weather");
@@ -25,20 +25,24 @@ app.get("/", function(request, response) {
 });
 
 app.get("/latest", async (request, response, next) => {
-  var sort = {observationTimeUtc : -1};
-  var documents = await weatherDB.collection("weather_sleuth_observations").find().sort(sort).limit(1).toArray();
-  response.status(200).json({
-    time: documents[0].observationTimeUtc,
-    temperature : documents[0].outsideTemperature,
-    humidity: documents[0].outsideHumidity,
-    windDirection: documents[0].windDirection,
-    windSpeed: documents[0].windSpeed,
-    windGust: documents[0].windGust,
-    rainRate: documents[0].rainRate,
-    light: documents[0].light,
-    uv: documents[0].uv,
-    pressure: documents[0].relativeBarometer
-  });
+    var sort = {observationTimeUtc : -1};
+    var documents = await weatherDB.collection("weather_sleuth_observations").find().sort(sort).limit(1).toArray();
+    if (documents.length > 0) {
+        response.status(200).json({
+            time: documents[0].observationTimeUtc,
+            temperature : documents[0].outsideTemperature,
+            humidity: documents[0].outsideHumidity,
+            windDirection: documents[0].windDirection,
+            windSpeed: documents[0].windSpeed,
+            windGust: documents[0].windGust,
+            rainRate: documents[0].rainRate,
+            light: documents[0].light,
+            uv: documents[0].uv,
+            pressure: documents[0].relativeBarometer
+        });
+    } else {
+        response.status(500).json({message : "No observations"})
+    }
 });
 
 app.get("/history/timespan/:timespan/steps/:steps", async (request, response, next) => {

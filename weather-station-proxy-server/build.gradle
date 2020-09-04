@@ -15,7 +15,7 @@ apply plugin: 'io.spring.dependency-management'
 group 'uk.co.iseeshapes'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 11
 
 /*jar {
     from project (':common-weather').sourceSets.main.output
@@ -35,10 +35,10 @@ repositories {
 }
 
 dependencies {
-    compile project (":common-weather")
-    compile 'uk.co.iseeshapes:common-weather:1.0-SNAPSHOT'
-    compile 'org.springframework.data:spring-data-mongodb:2.0.8.RELEASE'
-    compile("org.springframework.boot:spring-boot-starter-web")
+    implementation project (":common-weather")
+    implementation 'uk.co.iseeshapes:common-weather:1.0-SNAPSHOT'
+    implementation 'org.springframework.data:spring-data-mongodb:2.0.8.RELEASE'
+    implementation("org.springframework.boot:spring-boot-starter-web")
     // compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-    compile("org.springframework.boot:spring-boot-devtools")
+    implementation("org.springframework.boot:spring-boot-devtools")
 }
